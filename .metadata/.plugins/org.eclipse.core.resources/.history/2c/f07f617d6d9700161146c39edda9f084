@@ -1,0 +1,55 @@
+package com.TpJdbc.app;
+
+import java.sql.*;
+
+public class ConnexionUnique {
+
+	private Connection connection = null;
+	private static final ConnexionUnique instance = new ConnexionUnique();
+	private static final String CONNECT_URL = "jdbc:mysql://mysql-gossety.alwaysdata.net/gossety_bd";
+
+	private ConnexionUnique(){
+		connection = DriverManager.getConnection(CONNECT_URL,LOGIN,PASSWORD);
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public static ConnexionUnique getInstance() {
+		return instance;
+	}
+
+	@Override
+	public String toString() {
+		return "ConnexionUnique [connection=" + connection + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((connection == null) ? 0 : connection.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ConnexionUnique other = (ConnexionUnique) obj;
+		if (connection == null) {
+			if (other.connection != null)
+				return false;
+		} else if (!connection.equals(other.connection))
+			return false;
+		return true;
+	}
+	
+
+		
+}

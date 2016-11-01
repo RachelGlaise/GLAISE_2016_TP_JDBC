@@ -1,0 +1,46 @@
+package com.TpJdbc.app;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+
+public class testEntite {
+	static final ConnexionUnique instance = ConnexionUnique.getInstance();
+	// La requete de test
+	static final String req = "SELECT * " +
+	                          "FROM ETUDIANT " +
+	                          "WHERE VILLE_ET = 'AIX-EN-PROVENCE'";                                     
+	public static void main(String[] args) throws SQLException {
+		// Objet materialisant la connexion a la base de donnees
+		ArrayList<Etudiant> etudiants =  new ArrayList<Etudiant>();
+		Etudiant etu = new Etudiant();
+		try {
+			// Connexion a la base
+			// Creation d'une instruction SQL
+			Statement stmt = instance.getConnection().createStatement();
+			// Execution de la requete
+			System.out.println("Execution de la requete : " + req );
+			ResultSet rset = stmt.executeQuery(req);
+			// Affichage du resultat
+			while (rset.next()){	
+
+				etu.setNumEt(rset.getInt("NUM_ET"));
+				etu.setNomEt(rset.getString("NOM_ET"));
+				etu.setPrenomEt(rset.getString("PRENOM_ET"));
+				
+				etudiants.add(etu);
+			}
+			// Fermeture de l'instruction (liberation des ressources)
+			stmt.close();
+			System.out.println("\nOk.\n");
+		} catch (SQLException e) {
+			e.printStackTrace();// Arggg!!!
+			System.out.println(e.getMessage() + "\n");
+		} finally {
+			if (instance.getConnection() != null) {
+				// Deconnexion de la base de donnees
+				instance.getConnection().close();
+			}
+		}
+	}
+}

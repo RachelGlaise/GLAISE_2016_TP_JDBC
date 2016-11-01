@@ -1,0 +1,15 @@
+package com.TpJdbc.app;
+
+import java.io.Serializable;
+
+public class Prof implements Serializable {
+	private int numProf;
+	private String nomProf;
+	private String prenomProf;
+	private String adrProf;
+	private String cpProf;
+	private String villeProf;
+	
+	//CONSTRUCTEUR
+	public Prof(){}
+}

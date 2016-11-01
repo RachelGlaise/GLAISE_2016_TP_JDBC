@@ -1,0 +1,34 @@
+package com.TpJdbc.app;
+
+import java.sql.*;
+
+public class ConnexionUnique {
+
+	private static Connection connection ;
+	private static ConnexionUnique instance; 
+	static final String CONNECT_URL = "jdbc:mysql://mysql-gossety.alwaysdata.net/gossety_bd";
+	static final String LOGIN = "gossety_user";
+	static final String PASSWORD = "gossety";
+
+	private ConnexionUnique(){
+
+		try {
+			connection = DriverManager.getConnection(CONNECT_URL,LOGIN,PASSWORD);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public static ConnexionUnique getInstance() {
+		if (connection == null)
+			new ConnexionUnique();
+		return instance;
+	}
+		
+}
